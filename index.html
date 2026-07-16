@@ -126,7 +126,7 @@
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">theme</button>
     <p class="eyebrow">Claude Code · Skill Reference</p>
     <h1>Your Skill Arsenal</h1>
-    <p class="lede">Every skill loaded in your sessions — <b>127 you installed</b> plus Claude Code's built-ins — grouped by what they do, with the task each is best suited for. Two businesses run through this toolkit: the <b>Premium POS</b> B2B SaaS you intend to sell, and your <b>NQ trading</b> system. Type below to filter across all of them.</p>
+    <p class="lede">Every skill loaded in your sessions — <b>128 you installed</b> plus Claude Code's built-ins — grouped by what they do, with the task each is best suited for. Two businesses run through this toolkit: the <b>Premium POS</b> B2B SaaS you intend to sell, and your <b>NQ trading</b> system. Type below to filter across all of them.</p>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -212,6 +212,7 @@ const S = [
   ["vpe-review","advisor","/cs:vpe-review — throughput-first VP-Eng interrogation of any delivery/hiring/reorg plan.","Before an eng hiring wave, reorg, or delivery commitment."],
   ["deep-research-ecc","research","Multi-source cited research via firecrawl/exa MCP — plan, search, deep-read, synthesize.","Thorough cited reports (needs firecrawl/exa configured)."],
   ["just-scrape","research","Scrape/crawl/extract/monitor web pages via the ScrapeGraph CLI (SGAI key set).","Grabbing content or structured JSON from any URL."],
+  ["firecrawl-lean","research","Token-efficient Firecrawl CLI reference — search, scrape, fetch, crawl docs, extract structured data, JS/login-gated pages.","Web scraping/crawl via Firecrawl. Needs FIRECRAWL_API_KEY."],
   ["research-methodology","research","Research-before-code protocol: detect dependency versions, prefer official docs, cite version + URL, output a confidence-rated ResearchPack.","Disciplined 'check the real docs before coding' in normal sessions; coexists with GSD."],
   ["ui-ux-pro-max","design","UI/UX design intelligence — 50+ styles, 161 palettes, 57 font pairings, 99 UX rules, 10 stacks.","Designing/reviewing any UI — the Premium POS design phase."],
   ["hallmark","design","Anti-AI-slop design — greenfield pages, audits, redesigns, extract a design from a URL/screenshot.","Making a page not read as AI-generated; design audits."],
@@ -256,10 +257,10 @@ const BUILT = [
 
 const el = (t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
 
-const stats=[["127","Installed skills"],["69","GSD workflow"],["28","RevOps pack"],["8","Clerk auth"],["11","Categories"]];
+const stats=[["128","Installed skills"],["69","GSD workflow"],["28","RevOps pack"],["8","Clerk auth"],["11","Categories"]];
 const statsEl=document.getElementById("stats");
 stats.forEach(([n,l])=>{const d=el("div","stat");d.append(el("div","n",n),el("div","l",l));statsEl.append(d);});
-document.getElementById("fcount").textContent="127";
+document.getElementById("fcount").textContent="128";
 
 const chipsEl=document.getElementById("chips");
 CATS.forEach(c=>{const a=el("a","chip",'<span class="d"></span>'+c.name);a.href="#"+c.id;a.style.setProperty("--cc","var("+c.cc+")");a.querySelector(".d").style.setProperty("--cc","var("+c.cc+")");chipsEl.append(a);});
