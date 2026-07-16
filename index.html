@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Reference catalog of installed Claude Code skills.">
+<meta name="robots" content="noindex, nofollow">
+<title>Skill Arsenal — Reference</title>
+<style>
+  :root{
+    --bg:#EAEEF1; --surface:#FFFFFF; --surface-2:#F4F6F8;
+    --ink:#161B22; --muted:#5C6875; --faint:#8996A3;
+    --line:#D6DCE2; --line-strong:#C3CBD3;
+    --accent:#B45309; --accent-soft:#f3e2cf;
+    --c-revops:#0E7C7B; --c-gtm:#3E5C76; --c-intel:#8B3A62;
+    --c-content:#A8551A; --c-advisor:#4C5FD5; --c-research:#2C7A4B;
+    --c-design:#B03A5B; --c-dev:#566270; --c-gsd:#7A5C2E;
+    --c-builtin:#455A64; --c-plugin:#5B4B8A;
+    --shadow:0 1px 2px rgba(20,27,34,.06),0 4px 16px rgba(20,27,34,.05);
+    --radius:12px;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0D1116; --surface:#141A21; --surface-2:#1A222B;
+      --ink:#E6ECF2; --muted:#98A6B4; --faint:#697887;
+      --line:#232C36; --line-strong:#31404C;
+      --accent:#E0912F; --accent-soft:#3a2c17;
+      --c-revops:#3BB3B0; --c-gtm:#7FA0BE; --c-intel:#CE7BA1;
+      --c-content:#E39A55; --c-advisor:#8B98EE; --c-research:#5DBE83;
+      --c-design:#E27E9C; --c-dev:#93A2B1; --c-gsd:#C9A867;
+      --c-builtin:#8AA1AE; --c-plugin:#A796D6;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#EAEEF1; --surface:#FFFFFF; --surface-2:#F4F6F8;
+    --ink:#161B22; --muted:#5C6875; --faint:#8996A3;
+    --line:#D6DCE2; --line-strong:#C3CBD3;
+    --accent:#B45309;
+    --c-revops:#0E7C7B; --c-gtm:#3E5C76; --c-intel:#8B3A62;
+    --c-content:#A8551A; --c-advisor:#4C5FD5; --c-research:#2C7A4B;
+    --c-design:#B03A5B; --c-dev:#566270; --c-gsd:#7A5C2E;
+    --c-builtin:#455A64; --c-plugin:#5B4B8A;
+    --shadow:0 1px 2px rgba(20,27,34,.06),0 4px 16px rgba(20,27,34,.05);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D1116; --surface:#141A21; --surface-2:#1A222B;
+    --ink:#E6ECF2; --muted:#98A6B4; --faint:#697887;
+    --line:#232C36; --line-strong:#31404C;
+    --accent:#E0912F;
+    --c-revops:#3BB3B0; --c-gtm:#7FA0BE; --c-intel:#CE7BA1;
+    --c-content:#E39A55; --c-advisor:#8B98EE; --c-research:#5DBE83;
+    --c-design:#E27E9C; --c-dev:#93A2B1; --c-gsd:#C9A867;
+    --c-builtin:#8AA1AE; --c-plugin:#A796D6;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
+
+  header.top{padding:44px 0 20px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+  h1{font-size:clamp(28px,4.4vw,42px);line-height:1.08;margin:0 0 12px;letter-spacing:-.02em;text-wrap:balance;font-weight:680}
+  .lede{font-size:17px;color:var(--muted);max-width:66ch;margin:0}
+  .lede b{color:var(--ink);font-weight:600}
+
+  .theme-btn{position:absolute;top:20px;right:20px;font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+  .theme-btn:hover{border-color:var(--accent);color:var(--ink)}
+
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;box-shadow:var(--shadow)}
+  .stat .n{font-family:var(--mono);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-top:2px}
+
+  .toolbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);padding:14px 0;margin-top:14px;border-bottom:1px solid var(--line)}
+  .search{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)}
+  .search::placeholder{color:var(--faint)}
+  .search:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .chip{font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip .d{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:baseline;background:var(--cc,var(--muted))}
+  .count-note{font-size:13px;color:var(--faint);margin:16px 0 0;font-family:var(--mono);min-height:1em}
+
+  section.grp{margin-top:38px;scroll-margin-top:150px}
+  .grp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-left:3px solid var(--cc);padding-left:14px;margin-bottom:6px}
+  .grp-head h2{font-size:20px;margin:0;letter-spacing:-.01em;font-weight:660}
+  .grp-head .k{font-family:var(--mono);font-size:12px;color:var(--cc);font-weight:600}
+  .grp-blurb{color:var(--muted);font-size:14.5px;margin:2px 0 16px;padding-left:17px;max-width:78ch}
+
+  .tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .row{display:grid;grid-template-columns:200px 1.35fr 1fr;gap:18px;padding:14px 18px;border-top:1px solid var(--line);align-items:start}
+  .row:first-child{border-top:none}
+  .row.head{background:var(--surface-2);border-top:none}
+  .row.head span{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:600}
+  .nm{font-family:var(--mono);font-size:13.5px;color:var(--ink);font-weight:600;word-break:break-word}
+  .nm .tag{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cc);margin-right:7px;vertical-align:middle}
+  .does{font-size:14px;color:var(--ink)}
+  .best{font-size:13.5px;color:var(--muted)}
+  .best b{color:var(--ink);font-weight:600}
+
+  .note{background:var(--surface-2);border:1px dashed var(--line-strong);border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--muted);margin-top:14px}
+  .note b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:5px;border:1px solid var(--line)}
+
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+
+  @media (max-width:720px){
+    .row{grid-template-columns:1fr;gap:6px;padding:14px 16px}
+    .row.head{display:none}
+    .nm{font-size:14px}
+    .best::before{content:"Best for — ";color:var(--faint);font-weight:600}
+    .stats{gap:8px}
+    .theme-btn{position:static;display:inline-block;margin-bottom:14px}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle theme">theme</button>
+    <p class="eyebrow">Claude Code · Skill Reference</p>
+    <h1>Your Skill Arsenal</h1>
+    <p class="lede">Every skill loaded in your sessions — <b>117 you installed</b> plus Claude Code's built-ins — grouped by what they do, with the task each is best suited for. Two businesses run through this toolkit: the <b>Premium POS</b> B2B SaaS you intend to sell, and your <b>NQ trading</b> system. Type below to filter across all of them.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="toolbar">
+    <input class="search" id="q" type="search" placeholder="Filter skills — try &ldquo;forecast&rdquo;, &ldquo;pitch deck&rdquo;, &ldquo;scrape&rdquo;, &ldquo;scaffold&rdquo;&hellip;" aria-label="Filter skills">
+    <div class="chips" id="chips"></div>
+    <p class="count-note" id="cnote"></p>
+  </div>
+
+  <main id="cats"></main>
+
+  <footer>
+    Updated 2026-07-09 · <span id="fcount"></span> skills in <code>~/.claude/skills</code> + Claude Code built-ins. Plugin/connector packs are summarized at the end and need one-time authorization. This is a point-in-time snapshot, redeployed when the toolkit changes.
+  </footer>
+</div>
+
+<script>
+const CATS = [
+  {id:"revops", name:"RevOps & Revenue Operations", cc:"--c-revops",
+   blurb:"The NEON B2B RevOps pack. Diagnostics-first — find the real constraint in a revenue engine before prescribing a fix. This is the backbone for making Premium POS's B2B side sellable."},
+  {id:"gtm", name:"Go-to-Market & Sales", cc:"--c-gtm",
+   blurb:"Structure the selling motion: who sells to whom, how they're paid, how leads move, and how deals close."},
+  {id:"intel", name:"Competitive & Market Intelligence", cc:"--c-intel",
+   blurb:"Scope a competitor set, benchmark it, and turn it into a decision-grade report. A three-stage pipeline plus decision-oriented market research."},
+  {id:"content", name:"Content & Distribution", cc:"--c-content",
+   blurb:"Turn source material into platform-native content and distribute it without duplicating copy. Neither skill auto-posts."},
+  {id:"advisor", name:"C-Suite & Strategy Advisors", cc:"--c-advisor",
+   blurb:"On-demand executive judgment — CTO, Chief AI Officer, chief-of-staff, and a company-as-code architect. Several ship runnable calculators."},
+  {id:"research", name:"Research & Web Data", cc:"--c-research",
+   blurb:"Pull evidence from the live web, and research disciplined before coding — cited reports, scraping, structured extraction, version-accurate docs."},
+  {id:"design", name:"Design & Frontend", cc:"--c-design",
+   blurb:"Design intelligence and UI compliance for anything user-facing — earmarked for the Premium POS design phase."},
+  {id:"dev", name:"Code Quality & Dev Tooling", cc:"--c-dev",
+   blurb:"Standalone engineering tools that sit outside the GSD workflow — review, scaffolding, and code analysis."},
+  {id:"gsd", name:"GSD — Spec-Driven Dev Workflow", cc:"--c-gsd",
+   blurb:"A 69-skill system that drives features through a disciplined loop (discuss → plan → execute → verify → ship) in fresh-context subagents. Grouped below by phase; invoke as /gsd-…"},
+  {id:"builtin", name:"Built-in Claude Code Skills", cc:"--c-builtin",
+   blurb:"Ship with Claude Code and load every session — documents, visualization, verification, config, and research."},
+];
+
+const S = [
+  ["revops-diagnostic","revops","Finds the real system constraint in a GTM org (IFA diagnostic, six-stage check, root-cause).","<b>Start here</b> on any 'revenue is broken' problem — diagnoses before prescribing."],
+  ["revops-strategy","revops","RevOps strategy, pipeline/bow-tie architecture, KPI frameworks, strategic framing.","Framing a revenue problem or building the KPI spine for the POS B2B story."],
+  ["revops-metrics","revops","What to measure — funnel math, unit economics, LTV/CAC, NRR/GRR, Rule of 40.","Building the metrics/benchmarks for a data room or board update."],
+  ["revops-forecasting","revops","Forecast methodology, categories, pipeline coverage, accuracy, dashboards.","Making the number predictable before you sell the business."],
+  ["revops-data-governance","revops","Data model, field governance, dedup, sync rules, one source of truth.","Cleaning a messy CRM so reports agree — do before metrics."],
+  ["revops-tech-stack","revops","Stack architecture, platform evaluation, build-vs-buy, AI/knowledge tooling.","Auditing or consolidating the GTM tool stack."],
+  ["revops-handoffs","revops","Handoff design across the full bow-tie (Mktg→Sales→CS→expansion) + SLAs.","Fixing 'leads fall through the cracks' between teams."],
+  ["revops-change-management","revops","Change/enablement, adoption, rollout, Kotter/ADKAR, AI-adoption governance.","Getting a new process, tool, or comp plan to actually stick."],
+  ["revops-crisis","revops","Emergency triage when multiple revenue systems fail at once.","'Everything is broken, where do we start' — stabilize first."],
+  ["revops-org-chart","revops","RevOps team design, role structure, hiring sequence by ARR stage.","Deciding when/who to hire into RevOps."],
+  ["revops-hubspot","revops","HubSpot implementation patterns — properties, lifecycle, workflows, reporting.","Any HubSpot build/cleanup."],
+  ["revops-salesforce","revops","Salesforce patterns — object model, Flows, forecasting, field governance.","Any Salesforce build/migration."],
+  ["gtm-planning","gtm","GTM motion, territory & capacity planning, org design, PLG vs sales-led.","Structuring the sales team, territories, or headcount plan."],
+  ["gtm-compensation","gtm","Comp plans, OTE, quotas, accelerators, SPIFs, benchmarking.","'How should I pay reps' / designing incentives."],
+  ["marketing-operations","gtm","Lead scoring, attribution, campaign ops, MQL→SQL handoff, ICP-fit scoring.","Marketing ops plumbing and 'our leads are garbage' problems."],
+  ["cs-operations","gtm","Customer success ops — health scoring, renewals, churn/save plays, expansion signals.","Post-sale retention & expansion engine."],
+  ["sales-methodology","gtm","SPICED/MEDDIC/Challenger/SPIN/Gap Selling; deal scoring, discovery, discount handling.","Operationalizing a qualification method or handling discount objections."],
+  ["partner-channel-operations","gtm","Partner program design, enablement, co-sell, deal registration, tiers.","Standing up or fixing a partner program."],
+  ["pipeline-visibility","gtm","CRM-agnostic pipeline reporting, dashboards, hygiene, stale-deal detection.","'We can't see our pipeline' / building deal dashboards."],
+  ["lead-routing","gtm","Routing logic, round-robin, territory assignment, speed-to-lead SLAs.","Leads not reaching the right rep fast enough."],
+  ["data-enrichment","gtm","Enrichment strategy, provider selection (ZoomInfo/Clay/Apollo…), quality.","Choosing/wiring an enrichment tool; incomplete lead data."],
+  ["deal-velocity-engineer","gtm","Sales-cycle diagnostics, stage exit criteria, zombie-deal cleanup, MAPs.","'Deals stall / cycle too long' compression work."],
+  ["operating-cadence-designer","gtm","Install the operating cadence — meeting architecture + decision rules.","Meetings are status theater; nobody decides."],
+  ["revenue-operating-cadence","gtm","Meeting architecture, data pyramid, board reporting that drives execution.","Board decks, forecast calls, QBR structure."],
+  ["expansion-revenue-architect","gtm","NRR/GRR systems — whitespace, expansion motion, renewal pricing, 90-day NRR.","Improving net revenue retention / land-and-expand."],
+  ["partner-ecosystem-architect","gtm","Ecosystem-led growth / nearbound strategy, account mapping, PRM tooling.","Deciding if partners are your next GTM motion."],
+  ["icp-builder","intel","Build/validate an ICP with the GAP method, SPICED, interview pipeline, tiering.","Defining or fixing who you sell to — before positioning."],
+  ["positioning-messaging-designer","intel","Positioning & messaging via Use-Case Canvas + Opposites (Old Way/New Way).","Turning a defined ICP into a value prop and one-liner."],
+  ["competitive-platform-analysis","intel","Scope & tier a competitor set (Direct/Adjacent/Aspirational) before benchmarking.","Step 1 of a competitive study — decide who counts."],
+  ["competitive-report-structure","intel","Assemble scored competitor cards into a decision-grade report (map→matrix→white-space).","Final step — the board-ready competitive deliverable."],
+  ["market-research","research","Decision-oriented market sizing (TAM/SAM/SOM), competitor & fund diligence, tech scans.","Sizing a market or pressure-testing a thesis with sources."],
+  ["content-engine","content","Turn a source asset into platform-native posts/threads/scripts (X, LinkedIn, video, newsletter).","Creating content from a memo, demo, or article."],
+  ["crosspost","content","Adapt one idea into per-platform variants (X/LinkedIn/Threads/Bluesky) without dupe copy.","Distributing a launch/essay across social."],
+  ["cto-advisor","advisor","Tech strategy, tech-debt & team-scaling frameworks + stdlib Python calculators, DORA metrics, ADRs.","CTO-level calls: tech debt, scaling eng, architecture decisions."],
+  ["chief-ai-officer-advisor","advisor","Model build-vs-buy (3yr TCO), AI risk (EU AI Act/NIST), cost economics, AI team org + calculators.","'API vs fine-tune vs self-host' and AI regulatory-risk calls."],
+  ["arquiteto-de-empresa","advisor","'Company Architect' — builds a company as a version-controlled markdown OKF bundle via 12-phase interview.","Documenting a whole company as structured, agent-readable files."],
+  ["gtm-operating-cadence","advisor","Meeting rhythms, weekly metrics, quarterly planning, decision velocity for scaling cos.","'Meetings don't produce decisions' as the company grows."],
+  ["execute","advisor","/cs:execute — turns an approved decision into a 90-day plan (milestones, DRIs, cadence).","Making a decision operational: 'what happens Monday?'"],
+  ["post-mortem","advisor","/cs:post-mortem — scores a decision vs its pre-committed success/kill criteria + dissent.","90-day retro that keeps you honest."],
+  ["vpe-review","advisor","/cs:vpe-review — throughput-first VP-Eng interrogation of any delivery/hiring/reorg plan.","Before an eng hiring wave, reorg, or delivery commitment."],
+  ["deep-research-ecc","research","Multi-source cited research via firecrawl/exa MCP — plan, search, deep-read, synthesize.","Thorough cited reports (needs firecrawl/exa configured)."],
+  ["just-scrape","research","Scrape/crawl/extract/monitor web pages via the ScrapeGraph CLI (SGAI key set).","Grabbing content or structured JSON from any URL."],
+  ["research-methodology","research","Research-before-code protocol: detect dependency versions, prefer official docs, cite version + URL, output a confidence-rated ResearchPack.","Disciplined 'check the real docs before coding' in normal sessions; coexists with GSD."],
+  ["ui-ux-pro-max","design","UI/UX design intelligence — 50+ styles, 161 palettes, 57 font pairings, 99 UX rules, 10 stacks.","Designing/reviewing any UI — the Premium POS design phase."],
+  ["autoreview","dev","Pre-commit/ship code review that shells to a reviewer engine (Codex default) with repo isolation.","A second-model review of a diff/branch before shipping."],
+  ["senior-fullstack","dev","Full-stack toolkit: scaffolds Next.js/FastAPI/MERN/Django, a code-quality + security analyzer, and a deterministic stack-decision engine.","Scaffolding, code/security audits, or stack choices on the POS monorepo. <b>Only the scaffolder writes files</b> (a new project folder)."],
+];
+
+const GSD = [
+  ["Project lifecycle","gsd-new-project, gsd-new-milestone, gsd-complete-milestone, gsd-milestone-summary, gsd-audit-milestone, gsd-audit-uat, gsd-review-backlog, gsd-ns-project","Start/close projects & milestones; audit them against intent."],
+  ["Workflow loop","gsd-discuss-phase, gsd-plan-phase, gsd-execute-phase, gsd-verify-work, gsd-phase, gsd-progress, gsd-autonomous, gsd-mvp-phase, gsd-ultraplan-phase, gsd-ai-integration-phase, gsd-spec-phase, gsd-next, gsd-ns-workflow","The core per-phase loop: discuss → plan → execute → verify."],
+  ["Quality & review","gsd-code-review, gsd-debug, gsd-audit-fix, gsd-secure-phase, gsd-eval-review, gsd-add-tests, gsd-validate-phase, gsd-plan-review-convergence, gsd-review, gsd-forensics, gsd-ui-phase, gsd-ui-review, gsd-ns-review","Review, debug, secure, test, and audit built work."],
+  ["Context & knowledge","gsd-map-codebase, gsd-graphify, gsd-docs-update, gsd-extract-learnings, gsd-mempalace-capture, gsd-mempalace-recall, gsd-ingest-docs, gsd-import, gsd-ns-context","Map the codebase, build a knowledge graph, capture learnings."],
+  ["Ideation","gsd-explore, gsd-sketch, gsd-spike, gsd-capture, gsd-ns-ideate","Think through ideas before committing to a plan."],
+  ["Manage & ship","gsd-ship, gsd-pr-branch, gsd-config, gsd-settings, gsd-workspace, gsd-workstreams, gsd-thread, gsd-update, gsd-inbox, gsd-manager, gsd-pause-work, gsd-resume-work, gsd-undo, gsd-cleanup, gsd-health, gsd-stats, gsd-help, gsd-profile-user, gsd-surface, gsd-quick, gsd-fast, gsd-ns-manage","Ship PRs, manage config/workspaces/threads, pause & resume."],
+];
+
+const BUILT = [
+  ["deep-research","builtin","Built-in fan-out research harness — searches, adversarially verifies claims, cites a report.","Fact-checked multi-source research (distinct from deep-research-ecc)."],
+  ["dataviz","builtin","Design-system for any chart/graph/dashboard — palettes, marks, accessible light/dark.","Read before building any visualization."],
+  ["artifact-design","builtin","Design guidance for shareable HTML/Markdown artifacts (this page used it).","Before building a polished artifact page."],
+  ["verify","builtin","Drives an affected flow end-to-end to confirm a change actually works.","Before claiming a nontrivial change is done."],
+  ["code-review","builtin","Reviews the current diff for correctness bugs + cleanup at a chosen effort.","Quick correctness pass on a diff (/code-review)."],
+  ["simplify","builtin","Reviews changed code for reuse/simplification/efficiency and applies fixes.","Cleanup pass — quality only, no bug hunt."],
+  ["security-review","builtin","Security-focused review of a diff.","Checking a change for security exposure."],
+  ["run","builtin","Launches & drives this project's app to see a change working.","'Run/start/screenshot the app.'"],
+  ["docx / pdf / pptx / xlsx","builtin","Create & edit Word, PDF, PowerPoint, and Excel files.","Any document/spreadsheet/deck deliverable — data rooms, memos."],
+  ["canvas-design","builtin","Canvas/graphic design for richer visuals and diagrams.","Diagrams, infographics, designed graphics."],
+  ["update-config / keybindings-help","builtin","Configure settings.json (hooks, permissions, env) and keybindings.","Automating behavior or changing Claude Code config."],
+  ["claude-api","builtin","Reference for the Claude API/SDK — models, pricing, tool use, caching.","Building anything on the Anthropic API."],
+  ["loop / schedule","builtin","Run a prompt on an interval, or schedule cloud agents on a cron.","Recurring checks or scheduled automation."],
+  ["skill-creator","builtin","Scaffold and validate new Agent Skills.","Authoring your own skill."],
+];
+
+const el = (t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+
+const stats=[["117","Installed skills"],["69","GSD workflow"],["28","RevOps pack"],["14","Built-ins"],["10","Categories"]];
+const statsEl=document.getElementById("stats");
+stats.forEach(([n,l])=>{const d=el("div","stat");d.append(el("div","n",n),el("div","l",l));statsEl.append(d);});
+document.getElementById("fcount").textContent="117";
+
+const chipsEl=document.getElementById("chips");
+CATS.forEach(c=>{const a=el("a","chip",'<span class="d"></span>'+c.name);a.href="#"+c.id;a.style.setProperty("--cc","var("+c.cc+")");a.querySelector(".d").style.setProperty("--cc","var("+c.cc+")");chipsEl.append(a);});
+
+function rowHead(a,b,c){const r=el("div","row head");r.append(el("span",null,a),el("span",null,b),el("span",null,c));return r;}
+
+const root=document.getElementById("cats");
+CATS.forEach(c=>{
+  const sec=el("section","grp");sec.id=c.id;sec.style.setProperty("--cc","var("+c.cc+")");
+  const head=el("div","grp-head");
+  head.append(el("h2",null,c.name), el("span","k","· "+ (c.id==="gsd"?"69":c.id==="builtin"?"14":S.filter(s=>s[1]===c.id).length) +" skills"));
+  sec.append(head, el("p","grp-blurb",c.blurb));
+  const tbl=el("div","tbl");
+  if(c.id==="gsd"){
+    tbl.append(rowHead("Group","Skills","Purpose"));
+    GSD.forEach(g=>{
+      const r=el("div","row skill");r.dataset.text=(g[0]+" "+g[1]+" "+g[2]).toLowerCase();
+      r.append(el("div","nm",'<span class="tag"></span>'+g[0]), el("div","does",'<span style="font-family:var(--mono);font-size:12.5px;color:var(--muted)">'+g[1]+'</span>'), el("div","best",g[2]));
+      r.querySelector(".tag").style.background="var("+c.cc+")";tbl.append(r);
+    });
+  } else {
+    tbl.append(rowHead("Skill","What it does","Best for"));
+    const list = c.id==="builtin" ? BUILT : S.filter(s=>s[1]===c.id);
+    list.forEach(s=>{
+      const r=el("div","row skill");r.dataset.text=(s[0]+" "+s[2]+" "+s[3]).toLowerCase();
+      r.append(el("div","nm",'<span class="tag"></span>'+s[0]), el("div","does",s[2]), el("div","best",s[3]));
+      r.querySelector(".tag").style.background="var("+c.cc+")";tbl.append(r);
+    });
+  }
+  sec.append(tbl);
+  if(c.id==="gsd") sec.append(el("div","note",'<b>How GSD works:</b> it runs heavy research/planning/execution in fresh-context subagents to fight context rot. Onboard an existing repo with <code>/gsd-onboard</code> or start fresh with <code>/gsd-new-project</code>, then loop per phase. <code>/gsd-help</code> lists all 69.'));
+  root.append(sec);
+});
+
+const pg=el("section","grp");pg.id="plugins";pg.style.setProperty("--cc","var(--c-plugin)");
+const ph=el("div","grp-head");ph.append(el("h2",null,"Plugin & Connector Packs"),el("span","k","· auth-gated"));
+pg.append(ph,el("p","grp-blurb","Hundreds more skills are available through connected plugins, but most need a one-time authorization (via claude.ai connectors or /mcp) before their tools work. Grouped by pack:"));
+const PLUG = [
+  ["Finance & markets","bigdata-com (earnings, valuation, scenario, IPO), sp-global, lseg (bonds/FX/rates), carta-investors","Investor research, market/earnings analysis, fund admin."],
+  ["Sales & CRM","sales, common-room, customer-support (HubSpot/Intercom/Guru)","Account research, call prep, pipeline, support tickets."],
+  ["Marketing","marketing (campaigns, SEO, content), klaviyo, ahrefs, similarweb","Campaign plans, SEO audits, content."],
+  ["Product & design","product-management, figma, design, amplitude, pendo","Specs, roadmaps, Figma, UX research."],
+  ["Engineering & data","engineering, data (dashboards, SQL, viz), datadog, github, bigquery","Architecture, incident response, analytics."],
+  ["Legal & ops","legal (contracts, NDAs), finance (close, reconciliation), operations, productivity","Contract review, month-end close, runbooks."],
+  ["Small business","small-business (~40 skills: invoicing, payroll, cash flow, campaigns)","Owner-operator tasks."],
+  ["Docs & utility","anthropic-skills (docx/pdf/pptx/xlsx), desktop-commander, brightdata, clerk (auth)","Document creation, terminal, web scraping, auth setup."],
+];
+const pt=el("div","tbl");pt.append(rowHead("Pack","Includes","Best for"));
+PLUG.forEach(p=>{const r=el("div","row skill");r.dataset.text=(p[0]+" "+p[1]+" "+p[2]).toLowerCase();r.append(el("div","nm",'<span class="tag"></span>'+p[0]),el("div","does",p[1]),el("div","best",p[2]));r.querySelector(".tag").style.background="var(--c-plugin)";pt.append(r);});
+pg.append(pt,el("div","note",'<b>To activate:</b> connect via claude.ai connector settings or <code>/mcp</code> in an interactive session. Until then these show up but their tools stay unavailable.'));
+root.append(pg);
+const pa=el("a","chip",'<span class="d" style="--cc:var(--c-plugin)"></span>Plugin & Connector Packs');pa.href="#plugins";chipsEl.append(pa);
+
+const q=document.getElementById("q"), cnote=document.getElementById("cnote");
+q.addEventListener("input",()=>{
+  const t=q.value.trim().toLowerCase();let shown=0;
+  document.querySelectorAll(".skill").forEach(r=>{const hit=!t||r.dataset.text.includes(t);r.style.display=hit?"":"none";if(hit)shown++;});
+  document.querySelectorAll("section.grp").forEach(sec=>{const any=[...sec.querySelectorAll(".skill")].some(r=>r.style.display!=="none");sec.style.display=any?"":"none";});
+  cnote.textContent=t?shown+" match"+(shown===1?"":"es"):"";
+});
+
+const btn=document.getElementById("themeBtn");
+btn.addEventListener("click",()=>{
+  const cur=document.documentElement.getAttribute("data-theme");
+  const dark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+  document.documentElement.setAttribute("data-theme",dark?"light":"dark");
+});
+</script>
+</body>
+</html>
