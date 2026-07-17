@@ -431,8 +431,10 @@ CATS.forEach(c=>{
 function setCat(id){
   active=id;
   chips.querySelectorAll(".chip").forEach(b=>{const on=b.dataset.cat===id;b.setAttribute("aria-pressed",on);b.style.background=on&&b.dataset.cc?"var("+b.dataset.cc+")":"";});
-  if(id!=="all"){const s=document.getElementById(id);if(s){s.classList.remove("collapsed");s.querySelector(".sec-head").setAttribute("aria-expanded","true");s.scrollIntoView({behavior:"smooth",block:"start"});}}
+  const s=id!=="all"?document.getElementById(id):null;
+  if(s){s.classList.remove("collapsed");s.querySelector(".sec-head").setAttribute("aria-expanded","true");}
   apply();
+  if(s)requestAnimationFrame(()=>{const y=s.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:"smooth"});});
 }
 const q=document.getElementById("q"),cnote=document.getElementById("cnote");
 function apply(){
