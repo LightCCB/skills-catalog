@@ -95,6 +95,19 @@
   code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:3px 7px;border-radius:7px;border:1px solid var(--line)}
   footer{margin:44px 0 90px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:13.5px}
   footer a{color:var(--accent-ink)}
+  button.sec-head{width:100%;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;color:inherit;font:inherit;text-align:left;transition:opacity .12s}
+  button.sec-head:hover{opacity:.82}
+  .sec-head .chev{width:22px;height:22px;color:var(--faint);flex:none;margin-left:auto;transition:transform .22s ease}
+  .sec.collapsed .sec-head{margin-bottom:0;border-bottom-color:transparent}
+  .sec.collapsed .sec-head .chev{transform:rotate(-90deg)}
+  .sec.collapsed .sec-body{display:none}
+  main.searching .sec-body{display:block!important}
+  main.searching .sec.collapsed .sec-head .chev{transform:none}
+  .subgroup{margin-bottom:28px}
+  .subgroup:last-child{margin-bottom:0}
+  .sub-t{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--cc);text-transform:uppercase;letter-spacing:.07em;margin:0 0 13px;display:flex;align-items:center;gap:9px}
+  .sub-t::before{content:"";width:16px;height:2px;background:var(--cc);border-radius:2px;opacity:.7}
+  .sub-t span{color:var(--faint);font-weight:500}
   @media (max-width:720px){
     .toolbar{padding:11px 0 10px}
     .search{padding:13px 14px 13px 44px;font-size:16px}
@@ -348,29 +361,57 @@ function cardHtml(s){
 }
 const byId=Object.fromEntries(CATS.map(c=>[c.id,c]));
 const main=document.getElementById("main");
+const GSD_GROUPS=[
+  ["Core","gsd-core"],
+  ["Workflow loop","gsd-discuss-phase gsd-plan-phase gsd-execute-phase gsd-verify-work gsd-progress gsd-autonomous gsd-mvp-phase gsd-ultraplan-phase gsd-ai-integration-phase gsd-spec-phase gsd-phase gsd-ns-workflow"],
+  ["Project & milestones","gsd-new-project gsd-new-milestone gsd-complete-milestone gsd-milestone-summary gsd-audit-milestone gsd-audit-uat gsd-review-backlog gsd-ns-project"],
+  ["Quality & review","gsd-code-review gsd-debug gsd-audit-fix gsd-secure-phase gsd-eval-review gsd-add-tests gsd-validate-phase gsd-plan-review-convergence gsd-review gsd-forensics gsd-ui-phase gsd-ui-review gsd-ns-review"],
+  ["Context & knowledge","gsd-map-codebase gsd-graphify gsd-docs-update gsd-extract-learnings gsd-mempalace-capture gsd-mempalace-recall gsd-ingest-docs gsd-import gsd-ns-context"],
+  ["Ideation","gsd-explore gsd-sketch gsd-spike gsd-capture gsd-ns-ideate"],
+  ["Manage & ship","gsd-ship gsd-pr-branch gsd-config gsd-settings gsd-workspace gsd-workstreams gsd-thread gsd-update gsd-inbox gsd-manager gsd-pause-work gsd-resume-work gsd-undo gsd-cleanup gsd-health gsd-stats gsd-help gsd-profile-user gsd-surface gsd-quick gsd-fast gsd-ns-manage"],
+];
+function gsdBody(items){
+  const used=new Set();let html="";
+  GSD_GROUPS.forEach(([title,names])=>{
+    const set=names.split(" ");const g=items.filter(s=>set.includes(s[0]));if(!g.length)return;
+    g.forEach(s=>used.add(s[0]));
+    html+='<div class="subgroup"><div class="sub-t">'+title+' <span>'+g.length+'</span></div><div class="grid">'+g.map(cardHtml).join("")+'</div></div>';
+  });
+  const rest=items.filter(s=>!used.has(s[0]));
+  if(rest.length)html+='<div class="subgroup"><div class="sub-t">Other <span>'+rest.length+'</span></div><div class="grid">'+rest.map(cardHtml).join("")+'</div></div>';
+  return html;
+}
 CATS.forEach(c=>{
   const items=ALL.filter(s=>s[1]===c.id);if(!items.length)return;
-  const sec=el("section","sec");sec.id=c.id;sec.style.setProperty("--cc","var("+c.cc+")");
+  const collapsed=(c.id==="gsd");
+  const sec=el("section","sec"+(collapsed?" collapsed":""));sec.id=c.id;sec.style.setProperty("--cc","var("+c.cc+")");
+  const body=(c.id==="gsd")?gsdBody(items):'<div class="grid">'+items.map(cardHtml).join("")+'</div>';
   sec.innerHTML=
-    '<div class="sec-head"><div class="sec-badge">'+svgIcon(c.id)+'</div><div class="t">'+
-    '<h2>'+c.name+' <span class="ct">'+items.length+' skills</span></h2>'+
-    '<p class="bl">'+c.bl+'</p></div></div>'+
-    '<div class="grid">'+items.map(cardHtml).join("")+'</div>';
+    '<button class="sec-head" type="button" aria-expanded="'+(!collapsed)+'"><div class="sec-badge">'+svgIcon(c.id)+'</div><div class="t">'+
+    '<h2>'+c.name+' <span class="ct">'+items.length+' skills</span></h2><p class="bl">'+c.bl+'</p></div>'+
+    '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>'+
+    '<div class="sec-body">'+body+'</div>';
+  sec.querySelector(".sec-head").addEventListener("click",()=>{
+    const col=sec.classList.toggle("collapsed");
+    sec.querySelector(".sec-head").setAttribute("aria-expanded",!col);
+  });
   main.append(sec);
 });
 
 function setCat(id){
   active=id;
   chips.querySelectorAll(".chip").forEach(b=>{const on=b.dataset.cat===id;b.setAttribute("aria-pressed",on);b.style.background=on&&b.dataset.cc?"var("+b.dataset.cc+")":"";});
-  if(id!=="all"){const s=document.getElementById(id);if(s)s.scrollIntoView({behavior:"smooth",block:"start"});}
+  if(id!=="all"){const s=document.getElementById(id);if(s){s.classList.remove("collapsed");s.querySelector(".sec-head").setAttribute("aria-expanded","true");s.scrollIntoView({behavior:"smooth",block:"start"});}}
   apply();
 }
 const q=document.getElementById("q"),cnote=document.getElementById("cnote");
 function apply(){
   const t=q.value.trim().toLowerCase();let n=0;
+  main.classList.toggle("searching",!!t);
   document.querySelectorAll(".card").forEach(c=>{const hit=(active==="all"||c.dataset.cat===active)&&(!t||c.dataset.text.includes(t));c.style.display=hit?"":"none";if(hit)n++;});
+  document.querySelectorAll(".subgroup").forEach(g=>{const any=[...g.querySelectorAll(".card")].some(c=>c.style.display!=="none");g.style.display=any?"":"none";});
   document.querySelectorAll(".sec").forEach(s=>{const any=[...s.querySelectorAll(".card")].some(c=>c.style.display!=="none");s.style.display=any?"":"none";});
-  cnote.textContent=(t||active!=="all")?n+" skill"+(n===1?"":"s")+" shown":ALL.length+" skills across "+CATS.length+" sections";
+  cnote.textContent=(t||active!=="all")?n+" skill"+(n===1?"":"s")+" shown":ALL.length+" skills · "+CATS.length+" sections · tap a header to expand or collapse";
 }
 q.addEventListener("input",apply);apply();
 
