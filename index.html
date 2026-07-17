@@ -488,5 +488,9 @@ document.addEventListener("click",async e=>{
 
 document.getElementById("themeBtn").addEventListener("click",()=>{const cur=document.documentElement.getAttribute("data-theme");const dark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;document.documentElement.setAttribute("data-theme",dark?"light":"dark");});
 </script>
+<script type="module">
+  import { injectSpeedInsights } from './speed-insights.js';
+  injectSpeedInsights();
+</script>
 </body>
 </html>
