@@ -95,6 +95,16 @@
   code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:3px 7px;border-radius:7px;border:1px solid var(--line)}
   footer{margin:44px 0 90px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:13.5px}
   footer a{color:var(--accent-ink)}
+  .cardfoot{margin-top:auto;padding-top:6px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .votes{display:inline-flex;align-items:center;gap:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px}
+  .votes .v{width:26px;height:26px;display:grid;place-items:center;border:0;background:none;border-radius:7px;cursor:pointer;color:var(--faint);transition:color .12s,background .12s}
+  .votes .v:hover{background:color-mix(in srgb,var(--cc) 16%,transparent);color:var(--cc)}
+  .votes .v svg{width:16px;height:16px}
+  .votes .v.up.on{color:#2e9e5b;background:color-mix(in srgb,#2e9e5b 15%,transparent)}
+  .votes .v.down.on{color:#d0503f;background:color-mix(in srgb,#d0503f 15%,transparent)}
+  .votes .v[disabled]{cursor:default;opacity:.5}
+  .votes .score{min-width:22px;text-align:center;font-family:var(--mono);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .votes.off{opacity:.45;pointer-events:none}
   button.sec-head{width:100%;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;color:inherit;font:inherit;text-align:left;transition:opacity .12s}
   button.sec-head:hover{opacity:.82}
   .sec-head .chev{width:22px;height:22px;color:var(--faint);flex:none;margin-left:auto;transition:transform .22s ease}
@@ -357,7 +367,14 @@ function cardHtml(s){
   return '<div class="card'+(warn?' warn':'')+'" data-cat="'+cat+'" data-text="'+(name+' '+does+' '+fn+' '+c.name).toLowerCase().replace(/"/g,'')+'" style="--cc:var('+c.cc+')">'+
     '<div class="head"><div class="badge">'+svgIcon(cat)+'</div><h3>'+name+'</h3></div>'+
     '<p class="does">'+does+'</p>'+fnHtml+
-    '<div class="src">'+srcHtml+'</div></div>';
+    '<div class="cardfoot">'+
+      '<div class="votes" data-id="'+name+'">'+
+        '<button class="v up" data-dir="up" aria-label="upvote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button>'+
+        '<span class="score" data-id="'+name+'">0</span>'+
+        '<button class="v down" data-dir="down" aria-label="downvote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>'+
+      '</div>'+
+      '<div class="src">'+srcHtml+'</div>'+
+    '</div></div>';
 }
 const byId=Object.fromEntries(CATS.map(c=>[c.id,c]));
 const main=document.getElementById("main");
@@ -416,6 +433,34 @@ function apply(){
 q.addEventListener("input",apply);apply();
 
 (function(){const svg=document.getElementById("art");if(!svg)return;const W=1240,H=460,pts=[];for(let i=0;i<26;i++){const a=i*2.399963,r=40+i*15;pts.push([W*0.62+Math.cos(a)*r*1.7,H*0.5+Math.sin(a)*r*0.9]);}let g='';for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i][0]-pts[j][0],dy=pts[i][1]-pts[j][1];if(dx*dx+dy*dy<12000)g+='<line x1="'+pts[i][0].toFixed(1)+'" y1="'+pts[i][1].toFixed(1)+'" x2="'+pts[j][0].toFixed(1)+'" y2="'+pts[j][1].toFixed(1)+'" stroke="var(--accent-2)" stroke-width="1" opacity="0.35"/>';}pts.forEach((p,i)=>{g+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i%5===0?4:2.3)+'" fill="var(--accent-2)" opacity="'+(i%5===0?0.9:0.55)+'"/>';});svg.innerHTML=g;})();
+
+// ---- community votes (Vercel KV via /api/vote) ----
+const voted=id=>localStorage.getItem("sv:"+id);
+function setScore(id,net){document.querySelectorAll('.score[data-id="'+CSS.escape(id)+'"]').forEach(s=>s.textContent=(net>0?"+":"")+net);}
+function markVoted(box,dir){box.querySelectorAll(".v").forEach(b=>{b.disabled=true;b.classList.toggle("on",b.dataset.dir===dir);});}
+(async function initVotes(){
+  let data;
+  try{const r=await fetch("/api/vote",{cache:"no-store"});data=await r.json();}catch{data={ok:false};}
+  if(!data||data.ok===false){document.querySelectorAll(".votes").forEach(v=>v.classList.add("off"));return;}
+  const up=data.up||{},down=data.down||{};
+  document.querySelectorAll(".votes").forEach(box=>{
+    const id=box.dataset.id;const net=(up[id]||0)-(down[id]||0);setScore(id,net);
+    const d=voted(id);if(d)markVoted(box,d);
+  });
+})();
+document.addEventListener("click",async e=>{
+  const btn=e.target.closest(".votes .v");if(!btn)return;
+  const box=btn.closest(".votes");if(box.classList.contains("off"))return;
+  const id=box.dataset.id,dir=btn.dataset.dir;
+  if(voted(id))return;
+  const scoreEl=box.querySelector(".score");
+  const cur=parseInt(scoreEl.textContent,10)||0;
+  localStorage.setItem("sv:"+id,dir);markVoted(box,dir);setScore(id,cur+(dir==="up"?1:-1));
+  try{
+    const r=await fetch("/api/vote",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,dir})});
+    if(!r.ok&&r.status!==429){throw new Error();}
+  }catch{ /* keep optimistic; server is source of truth on next load */ }
+});
 
 document.getElementById("themeBtn").addEventListener("click",()=>{const cur=document.documentElement.getAttribute("data-theme");const dark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;document.documentElement.setAttribute("data-theme",dark?"light":"dark");});
 </script>
