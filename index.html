@@ -194,7 +194,6 @@ const CATS = [
   {id:"design",  name:"Design",              cc:"--c-design", bl:"Design intelligence and anti-AI-slop craft."},
   {id:"dev",     name:"Dev & Code",          cc:"--c-dev",    bl:"Review, scaffolding, and codebase knowledge graphs."},
   {id:"auth",    name:"Auth",                cc:"--c-auth",   bl:"The Clerk authentication pack for B2B apps."},
-  {id:"gsd",     name:"GSD Workflow",        cc:"--c-gsd",    bl:"A 69-skill spec-driven dev system. Install the whole thing (gsd-core); the rest are its phase commands."},
   {id:"systems", name:"Systems & Plugins",   cc:"--c-systems",bl:"Whole workflow systems and plugin toolkits, installed as one."},
 ];
 const ICON={
@@ -278,7 +277,7 @@ const S = [
   ["clerk-testing","auth","E2E tests for Clerk auth flows (Playwright/Cypress).","Auth breaks silently — this covers testing the flows.","https://github.com/clerk/skills"],
   ["clerk-backend-api","auth","Clerk Backend REST API explorer/executor — users, orgs, sessions.","Server-side user/org management + ad-hoc API calls.","https://github.com/clerk/skills"],
   ["clerk-cli","auth","Operate the Clerk CLI — auth, user/org mgmt, env pull, deploy.","Manage Clerk from the terminal; handles key resolution for you.","https://github.com/clerk/skills"],
-  ["gsd-core","gsd","Full spec-driven dev workflow — 69 skills, discuss→plan→execute→verify→ship.","A whole system, not one skill. Runs work in fresh-context subagents to fight context rot. Onboard a repo with /gsd-onboard.","https://github.com/open-gsd/gsd-core"],
+  ["Get Shit Done (GSD)","systems","Spec-driven dev workflow — one install adds 69 phase commands (discuss→plan→execute→verify→ship) that run in fresh-context subagents to fight context rot.","One package, 69 skills. Onboard a repo with /gsd-onboard, then loop per phase.","https://github.com/open-gsd/gsd-core"],
   ["superpowers","systems","Anthropic-community skill framework — brainstorming, TDD, debugging, plans.","Broad process toolkit; the brainstorming + systematic-debugging skills are the standouts.","https://github.com/obra/superpowers-marketplace"],
   ["mattpocock-skills","systems","Engineering chain — tdd, diagnosing-bugs, code-review, domain-modeling, grilling.","Run its /setup once per repo to point it at your issue tracker + docs, or the skills guess.","https://github.com/mattpocock/skills"],
   ["caveman","systems","Ultra-compressed output mode — cuts response tokens ~65%.","Auto-runs a mode hook. Great for long sessions; toggle with /caveman.","https://github.com/JuliusBrussee/caveman"],
@@ -288,78 +287,7 @@ const S = [
   ["last30days","systems","Trend search across Reddit/HN/X/YouTube/Polymarket by engagement.","Reddit/HN/Polymarket work out of the box; other feeds read your browser cookies — mind the privacy trade.","https://github.com/mvanhorn/last30days-skill"],
   ["mcpmarket-me","systems","Syncs skills from an MCPmarket toolkit + project-memory recall.","Caution: some exports ship a hardcoded API token and auto-download remote files into your skills dir each session. Review before trusting.","https://github.com/knoxgraeme/mcpmarket-plugin",true],
 ];
-const GSD_S = [
-  ["gsd-add-tests","gsd","Generate tests for a completed phase based on UAT criteria and implementation","",GSD],
-  ["gsd-ai-integration-phase","gsd","Generate an AI-SPEC.md design contract for phases that involve building AI systems.","",GSD],
-  ["gsd-audit-fix","gsd","Autonomous audit-to-fix pipeline — find issues, classify, fix, test, commit","",GSD],
-  ["gsd-audit-milestone","gsd","Audit milestone completion against original intent before archiving","",GSD],
-  ["gsd-audit-uat","gsd","Cross-phase audit of all outstanding UAT and verification items","",GSD],
-  ["gsd-autonomous","gsd","Run all remaining phases autonomously — discuss→plan→execute per phase","",GSD],
-  ["gsd-capture","gsd","Capture ideas, tasks, notes, and seeds to their destination","",GSD],
-  ["gsd-cleanup","gsd","Archive accumulated phase directories from completed milestones","",GSD],
-  ["gsd-code-review","gsd","Review source files changed during a phase for bugs, security issues, and code quality problems","",GSD],
-  ["gsd-complete-milestone","gsd","Archive completed milestone and prepare for next version","",GSD],
-  ["gsd-config","gsd","Configure GSD settings — workflow toggles, advanced knobs, integrations, and model profile","",GSD],
-  ["gsd-debug","gsd","Systematic debugging with persistent state across context resets","",GSD],
-  ["gsd-discuss-phase","gsd","Gather phase context through adaptive questioning before planning.","",GSD],
-  ["gsd-docs-update","gsd","Generate or update project documentation verified against the codebase","",GSD],
-  ["gsd-eval-review","gsd","Audit an executed AI phase's evaluation coverage and produce an EVAL-REVIEW.md remediation plan.","",GSD],
-  ["gsd-execute-phase","gsd","Execute all plans in a phase with wave-based parallelization","",GSD],
-  ["gsd-explore","gsd","Socratic ideation and idea routing — think through ideas before committing to plans","",GSD],
-  ["gsd-extract-learnings","gsd","Extract decisions, lessons, patterns, and surprises from completed phase artifacts","",GSD],
-  ["gsd-fast","gsd","Execute a trivial task inline — no subagents, no planning overhead","",GSD],
-  ["gsd-forensics","gsd","Post-mortem investigation for failed GSD workflows — diagnoses what went wrong.","",GSD],
-  ["gsd-graphify","gsd","Build, query, and inspect the project knowledge graph in .planning/graphs/","",GSD],
-  ["gsd-health","gsd","Diagnose planning directory health and optionally repair issues","",GSD],
-  ["gsd-help","gsd","Show available GSD commands and usage guide","",GSD],
-  ["gsd-import","gsd","Ingest external plans with conflict detection against project decisions before writing anything.","",GSD],
-  ["gsd-inbox","gsd","Triage and review open GitHub issues and PRs against project templates and contribution guidelines.","",GSD],
-  ["gsd-ingest-docs","gsd","Bootstrap or merge a .planning/ setup from existing ADRs, PRDs, SPECs, and docs in a repo.","",GSD],
-  ["gsd-manager","gsd","Interactive command center for managing multiple phases from one terminal","",GSD],
-  ["gsd-map-codebase","gsd","Analyze codebase with parallel mapper agents to produce .planning/codebase/ documents","",GSD],
-  ["gsd-mempalace-capture","gsd","File a phase artifact into MemPalace; mirror decision facts into its temporal KG","",GSD],
-  ["gsd-mempalace-recall","gsd","Recall decisions, patterns, and surprises from MemPalace before planning","",GSD],
-  ["gsd-milestone-summary","gsd","Generate a comprehensive project summary from milestone artifacts for team onboarding and review","",GSD],
-  ["gsd-mvp-phase","gsd","Plan a phase as a vertical MVP slice — user story, SPIDR splitting, then plan-phase","",GSD],
-  ["gsd-new-milestone","gsd","Start a new milestone cycle — update PROJECT.md and route to requirements","",GSD],
-  ["gsd-new-project","gsd","Initialize a new project with deep context gathering and PROJECT.md","",GSD],
-  ["gsd-ns-context","gsd","codebase intel | map graphify docs learnings mempalace","",GSD],
-  ["gsd-ns-ideate","gsd","exploration capture | explore sketch spike spec capture","",GSD],
-  ["gsd-ns-manage","gsd","config workspace | workstreams thread update ship inbox","",GSD],
-  ["gsd-ns-project","gsd","project lifecycle | milestones audits summary","",GSD],
-  ["gsd-ns-review","gsd","quality gates | code review debug audit security eval ui","",GSD],
-  ["gsd-ns-workflow","gsd","workflow | discuss plan execute verify phase progress","",GSD],
-  ["gsd-pause-work","gsd","Create context handoff when pausing work mid-phase","",GSD],
-  ["gsd-phase","gsd","CRUD for phases in ROADMAP.md — add, insert, remove, or edit phases","",GSD],
-  ["gsd-plan-phase","gsd","Create detailed phase plan (PLAN.md) with verification loop","",GSD],
-  ["gsd-plan-review-convergence","gsd","Cross-AI plan convergence - replan until review concerns are resolved.","",GSD],
-  ["gsd-pr-branch","gsd","Create a clean PR branch by filtering out .planning/ commits — ready for code review","",GSD],
-  ["gsd-profile-user","gsd","Generate developer behavioral profile and create Claude-discoverable artifacts","",GSD],
-  ["gsd-progress","gsd","Check progress, advance workflow, or dispatch freeform intent — the unified GSD situational command","",GSD],
-  ["gsd-quick","gsd","Execute a quick task with GSD guarantees (atomic commits, state tracking) but skip optional agents","",GSD],
-  ["gsd-resume-work","gsd","Resume work from previous session with full context restoration","",GSD],
-  ["gsd-review-backlog","gsd","Review and promote backlog items to active milestone","",GSD],
-  ["gsd-review","gsd","Request cross-AI peer review of phase plans from external AI CLIs","",GSD],
-  ["gsd-secure-phase","gsd","Retroactively verify threat mitigations for a completed phase","",GSD],
-  ["gsd-settings","gsd","Configure GSD workflow toggles and model profile","",GSD],
-  ["gsd-ship","gsd","Create PR, run review, and prepare for merge after verification passes","",GSD],
-  ["gsd-sketch","gsd","Sketch UI/design ideas with throwaway HTML mockups, or propose what to sketch next (frontier mode)","",GSD],
-  ["gsd-spec-phase","gsd","Clarify WHAT a phase delivers with ambiguity scoring; produces a SPEC.md before discuss-phase.","",GSD],
-  ["gsd-spike","gsd","Spike an idea through experiential exploration, or propose what to spike next (frontier mode)","",GSD],
-  ["gsd-stats","gsd","Display project statistics — phases, plans, requirements, git metrics, and timeline","",GSD],
-  ["gsd-surface","gsd","Toggle which skills are surfaced — apply a profile, list, or disable a cluster without reinstall","",GSD],
-  ["gsd-thread","gsd","Manage persistent context threads for cross-session work","",GSD],
-  ["gsd-ui-phase","gsd","Generate UI design contract (UI-SPEC.md) for frontend phases","",GSD],
-  ["gsd-ui-review","gsd","Retroactive 6-pillar visual audit of implemented frontend code","",GSD],
-  ["gsd-ultraplan-phase","gsd","[BETA] Offload plan phase to Claude Code's ultraplan cloud; review in browser and import back.","",GSD],
-  ["gsd-undo","gsd","Safe git revert. Roll back phase or plan commits using the phase manifest with dependency checks.","",GSD],
-  ["gsd-update","gsd","Update GSD to latest version with changelog display","",GSD],
-  ["gsd-validate-phase","gsd","Retroactively audit and fill Nyquist validation gaps for a completed phase","",GSD],
-  ["gsd-verify-work","gsd","Validate built features through conversational UAT","",GSD],
-  ["gsd-workspace","gsd","Manage GSD workspaces — create, list, or remove isolated workspace environments","",GSD],
-  ["gsd-workstreams","gsd","Manage parallel workstreams — list, create, switch, status, progress, complete, and resume","",GSD],
-];
-const ALL=S.concat(GSD_S);
+const ALL=S;
 
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
 let active="all";
@@ -375,15 +303,16 @@ CATS.forEach(c=>mkChip(c.id,c.name+" · "+ALL.filter(s=>s[1]===c.id).length,c.cc
 
 function cardHtml(s){
   const [name,cat,does,fn,src,warn]=s;const c=byId[cat];
+  const vid=name.toLowerCase().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"");
   const srcHtml=src?'<a href="'+src+'" target="_blank" rel="noopener noreferrer">source '+arrow+'</a>':'<span class="nolink">bundled skill</span>';
   const fnHtml=fn?'<p class="fn"><b>'+spark+'Field note</b>'+fn+'</p>':'';
   return '<div class="card'+(warn?' warn':'')+'" data-cat="'+cat+'" data-text="'+(name+' '+does+' '+fn+' '+c.name).toLowerCase().replace(/"/g,'')+'" style="--cc:var('+c.cc+')">'+
     '<div class="head"><div class="badge">'+svgIcon(cat)+'</div><h3>'+name+'</h3></div>'+
     '<p class="does">'+does+'</p>'+fnHtml+
     '<div class="cardfoot">'+
-      '<div class="votes" data-id="'+name+'">'+
+      '<div class="votes" data-id="'+vid+'">'+
         '<button class="v up" data-dir="up" aria-label="upvote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button>'+
-        '<span class="score" data-id="'+name+'">0</span>'+
+        '<span class="score" data-id="'+vid+'">0</span>'+
         '<button class="v down" data-dir="down" aria-label="downvote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>'+
       '</div>'+
       '<div class="src">'+srcHtml+'</div>'+
@@ -391,33 +320,12 @@ function cardHtml(s){
 }
 const byId=Object.fromEntries(CATS.map(c=>[c.id,c]));
 const main=document.getElementById("main");
-const GSD_GROUPS=[
-  ["Core","gsd-core"],
-  ["Workflow loop","gsd-discuss-phase gsd-plan-phase gsd-execute-phase gsd-verify-work gsd-progress gsd-autonomous gsd-mvp-phase gsd-ultraplan-phase gsd-ai-integration-phase gsd-spec-phase gsd-phase gsd-ns-workflow"],
-  ["Project & milestones","gsd-new-project gsd-new-milestone gsd-complete-milestone gsd-milestone-summary gsd-audit-milestone gsd-audit-uat gsd-review-backlog gsd-ns-project"],
-  ["Quality & review","gsd-code-review gsd-debug gsd-audit-fix gsd-secure-phase gsd-eval-review gsd-add-tests gsd-validate-phase gsd-plan-review-convergence gsd-review gsd-forensics gsd-ui-phase gsd-ui-review gsd-ns-review"],
-  ["Context & knowledge","gsd-map-codebase gsd-graphify gsd-docs-update gsd-extract-learnings gsd-mempalace-capture gsd-mempalace-recall gsd-ingest-docs gsd-import gsd-ns-context"],
-  ["Ideation","gsd-explore gsd-sketch gsd-spike gsd-capture gsd-ns-ideate"],
-  ["Manage & ship","gsd-ship gsd-pr-branch gsd-config gsd-settings gsd-workspace gsd-workstreams gsd-thread gsd-update gsd-inbox gsd-manager gsd-pause-work gsd-resume-work gsd-undo gsd-cleanup gsd-health gsd-stats gsd-help gsd-profile-user gsd-surface gsd-quick gsd-fast gsd-ns-manage"],
-];
-function gsdBody(items){
-  const used=new Set();let html="";
-  GSD_GROUPS.forEach(([title,names])=>{
-    const set=names.split(" ");const g=items.filter(s=>set.includes(s[0]));if(!g.length)return;
-    g.forEach(s=>used.add(s[0]));
-    html+='<div class="subgroup"><div class="sub-t">'+title+' <span>'+g.length+'</span></div><div class="grid">'+g.map(cardHtml).join("")+'</div></div>';
-  });
-  const rest=items.filter(s=>!used.has(s[0]));
-  if(rest.length)html+='<div class="subgroup"><div class="sub-t">Other <span>'+rest.length+'</span></div><div class="grid">'+rest.map(cardHtml).join("")+'</div></div>';
-  return html;
-}
 CATS.forEach(c=>{
   const items=ALL.filter(s=>s[1]===c.id);if(!items.length)return;
-  const collapsed=(c.id==="gsd");
-  const sec=el("section","sec"+(collapsed?" collapsed":""));sec.id=c.id;sec.style.setProperty("--cc","var("+c.cc+")");
-  const body=(c.id==="gsd")?gsdBody(items):'<div class="grid">'+items.map(cardHtml).join("")+'</div>';
+  const sec=el("section","sec");sec.id=c.id;sec.style.setProperty("--cc","var("+c.cc+")");
+  const body='<div class="grid">'+items.map(cardHtml).join("")+'</div>';
   sec.innerHTML=
-    '<button class="sec-head" type="button" aria-expanded="'+(!collapsed)+'"><div class="sec-badge">'+svgIcon(c.id)+'</div><div class="t">'+
+    '<button class="sec-head" type="button" aria-expanded="true"><div class="sec-badge">'+svgIcon(c.id)+'</div><div class="t">'+
     '<h2>'+c.name+' <span class="ct">'+items.length+' skills</span></h2><p class="bl">'+c.bl+'</p></div>'+
     '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>'+
     '<div class="sec-body">'+body+'</div>';
