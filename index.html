@@ -95,6 +95,14 @@
   code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:3px 7px;border-radius:7px;border:1px solid var(--line)}
   footer{margin:44px 0 90px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:13.5px}
   footer a{color:var(--accent-ink)}
+  @media (max-width:720px){
+    .toolbar{padding:11px 0 10px}
+    .search{padding:13px 14px 13px 44px;font-size:16px}
+    .chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;margin-top:10px;padding-bottom:4px;-ms-overflow-style:none;scrollbar-width:none;mask-image:linear-gradient(90deg,#000 92%,transparent)}
+    .chips::-webkit-scrollbar{height:0;display:none}
+    .chip{flex:0 0 auto;scroll-snap-align:start}
+    .cnote{margin-top:10px}
+  }
   @media (max-width:560px){body{font-size:16px}.grid{grid-template-columns:1fr}.hero-stats{gap:20px}}
   @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
