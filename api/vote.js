@@ -3,8 +3,9 @@
 // Env (auto-injected when you create a Vercel KV store and link it to the project):
 //   KV_REST_API_URL, KV_REST_API_TOKEN
 
-const URL = process.env.KV_REST_API_URL;
-const TOK = process.env.KV_REST_API_TOKEN;
+const e = process.env;
+const URL = e.KV_REST_API_URL || e.UPSTASH_REDIS_REST_URL;
+const TOK = e.KV_REST_API_TOKEN || e.UPSTASH_REDIS_REST_TOKEN;
 const ID_RE = /^[a-z0-9][a-z0-9-]{1,48}$/;
 
 async function kv(path) {
