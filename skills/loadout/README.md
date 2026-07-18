@@ -1,35 +1,46 @@
-# loadout — skill router
+# loadout — a fixed skill-loading pipeline for Claude Code
 
-A tiny meta-skill: before any non-trivial task, it scans your skill arsenal,
-shortlists the 1-5 skills that actually help, and keeps your token-savers on.
-Stops the agent guessing across a large skill collection and bloating context.
+`/loadout <task>` steps Claude through a **mandatory, ordered pipeline** of
+skills before it starts working — memory first, compression always, method,
+discipline, research with citations, then review gates. Not a picker: the
+order IS the workflow.
 
-## Install (Claude Code)
+## The pipeline
 
-**Manual (works everywhere):**
+1. **logseq-brain** — load project memory
+2. **caveman** — compressed output, always on (`full`)
+3. **Recent .md files** — read fresh handoffs/plans/docs in the repo
+4. **fable-method** — classify ask, define done + named verification
+5. **working-philosophy** — nothing is true until reality shows it
+6. **graphify** — query the knowledge graph, don't dump files
+7. **research-methodology** — version-accurate facts; **every claim cited, even
+   cites back to your own memory/notes**
+8. **deep-research** — only when multi-source web research is needed (same
+   citation rule)
+9. **product-capability** — capability contract for feature/PRD work
+10. **mattpocock-skills** — tdd / diagnosing-bugs / code-review
+11. **GSD** — multi-phase builds via `/gsd-*`
+12. **reflect** — attack irreversible decisions before committing
+13. **autoreview** — second-model review before ship
+
+Stages that objectively can't apply are skipped with a one-line note.
+
+## Install
+
 ```bash
-# from a clone of this repo
-cp -R skills/loadout ~/.claude/skills/loadout
-cp skills/loadout/commands/loadout.md ~/.claude/commands/loadout.md
-```
-Global (`~/.claude/…`) = all projects. Or use a project's `.claude/…` to scope it.
-
-**Then customize:** edit `~/.claude/skills/loadout/references/arsenal.md`
-(renamed from `arsenal-template.md`) — list YOUR installed skills, grouped by
-domain, and your token-saving skills under "Token-savers".
-
-```bash
-mv ~/.claude/skills/loadout/references/arsenal-template.md \
-   ~/.claude/skills/loadout/references/arsenal.md
+git clone --depth 1 https://github.com/LightCCB/skills-catalog /tmp/sc
+cp -r /tmp/sc/skills/loadout ~/.claude/skills/skill-router
+cp /tmp/sc/skills/loadout/commands/loadout.md ~/.claude/commands/loadout.md
 ```
 
-## Use
-- `/loadout <task>` — route a task now.
-- Or just start work — the skill fires itself on non-trivial tasks.
+Or per-project: copy into `.claude/skills/` + `.claude/commands/` of a repo.
 
-## Why
-Every loaded skill is context (token) cost. Precision beats coverage. The router
-turns "which of my 100 skills apply?" into a 10-second scan + a named shortlist,
-and enforces that your token-reducing skills stay on.
+## Dependencies
 
-MIT.
+The pipeline references skills you install separately (each is on the
+[field guide](https://skills-catalog-seven.vercel.app) with its source):
+logseq-brain, caveman, fable-method, working-philosophy, graphify,
+research-methodology, product-capability, mattpocock-skills, GSD, reflect,
+autoreview. Missing ones are skipped with a note — install what you use.
+
+MIT. Skills belong to their respective authors.
