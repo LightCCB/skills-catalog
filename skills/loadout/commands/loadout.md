@@ -7,6 +7,8 @@ Use the `skill-router` skill now.
 
 Task: $ARGUMENTS
 
+ENFORCEMENT: first run `bash ~/.claude/hooks/loadout-gate.sh start <session_id>` (session_id from env/transcript; use "default" if unknown). After completing EACH stage, mark it: `bash ~/.claude/hooks/loadout-gate.sh mark <session_id> <N>`. Hooks DENY Edit/Write until stages 1-4 are marked, and deny git push/merge until stage 13. For a trivial task, skip enforcement (`loadout-gate off`).
+
 Work the pipeline IN ORDER (do not cherry-pick):
 1. logseq-brain — load relevant project memory.
 2. caveman — ensure mode `full` (`/caveman full` if off).
