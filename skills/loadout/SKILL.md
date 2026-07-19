@@ -35,13 +35,23 @@ no autoreview); say so in one line. Token-savers stay ON at all times.
 9. **product-capability** — if the task is a feature/PRD/roadmap item: produce
    the capability contract (constraints, invariants, interfaces, open
    questions) before implementation.
-10. **mattpocock-skills** — engineering chain as applicable: tdd,
+10. **ADVERSARY GATE** — before ANY buildout: spawn an independent subagent
+    (Agent tool, fresh context) with a contrarian brief: *"Disagree with
+    everything. Attack the premise, the plan, the scope, the evidence, the
+    chosen approach. Steelman the strongest alternative. Do not be agreeable;
+    your job is to kill this plan."* Then argue it. Buildout is blocked until
+    the adversary returns an explicit **CONVINCED** verdict (with what
+    convinced it) OR the plan is revised and re-submitted until it survives.
+    Log the exchange (objections → responses → verdict) in one compact block.
+    Max 3 rounds; if still unconvinced, take the dispute to the user.
+11. **mattpocock-skills** — engineering chain as applicable: tdd,
     diagnosing-bugs, codebase-design, domain-modeling, code-review.
-11. **Get Shit Done (GSD)** — multi-phase build work runs through `/gsd-*`
+12. **Get Shit Done (GSD)** — multi-phase build work runs through `/gsd-*`
     (discuss → plan → execute → verify → ship).
-12. **reflect** — any decision whose undo cost exceeds a bad day: run the
-    attack loop before committing.
-13. **autoreview** — pre-commit/ship second-model review of the diff.
+13. **reflect** — any decision whose undo cost exceeds a bad day: run the
+    attack loop before committing (self-attack, distinct from the stage-10
+    external adversary).
+14. **autoreview** — pre-commit/ship second-model review of the diff.
 
 ## Token-savers — ON AT ALL TIMES
 

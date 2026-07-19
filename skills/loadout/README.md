@@ -18,10 +18,12 @@ order IS the workflow.
 8. **deep-research** — only when multi-source web research is needed (same
    citation rule)
 9. **product-capability** — capability contract for feature/PRD work
-10. **mattpocock-skills** — tdd / diagnosing-bugs / code-review
-11. **GSD** — multi-phase builds via `/gsd-*`
-12. **reflect** — attack irreversible decisions before committing
-13. **autoreview** — second-model review before ship
+10. **adversary gate** — an independent contrarian subagent briefed to
+    disagree with everything; no buildout until it returns CONVINCED
+11. **mattpocock-skills** — tdd / diagnosing-bugs / code-review
+12. **GSD** — multi-phase builds via `/gsd-*`
+13. **reflect** — attack irreversible decisions before committing
+14. **autoreview** — second-model review before ship
 
 Stages that objectively can't apply are skipped with a one-line note.
 

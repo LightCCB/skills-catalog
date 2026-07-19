@@ -15,6 +15,8 @@ case "$TOOL" in
     for n in 1 2 3 4; do has $n || deny "stage $n not marked — edits blocked until stages 1-4 (brain, caveman, md-files, fable-method) are done"; done;;
   Bash)
     CMD=$(printf '%s' "$IN" | sed -n 's/.*"command"[: ]*"\(.*\)".*/\1/p')
-    case "$CMD" in *git\ push*|*gh\ pr\ merge*) has 13 || deny "stage 13 (autoreview) not marked — push/merge blocked";; esac;;
+    case "$CMD" in *git\ push*|*gh\ pr\ merge*)
+      has 10 || deny "stage 10 (adversary gate) not CONVINCED — push/merge blocked"
+      has 14 || deny "stage 14 (autoreview) not marked — push/merge blocked";; esac;;
 esac
 exit 0
